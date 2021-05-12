@@ -5,6 +5,7 @@ function Header() {
   return (
       <header className="header">
         <img className="header__logo" src={logo} alt="Логотип названия сайта Место" />
+        
       </header>
   );
   }

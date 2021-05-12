@@ -1,29 +1,41 @@
 import React from "react";
+import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import Header from "./Header.js";
 import Main from "./Main.js";
+import Login from "./Login.js";
+import Register from "./Register";
 import Footer from "./Footer.js";
+import RegOk from "../images/RegOk.svg";
+import RegErr from "../images/RegErr.svg";
 import DeletePlacePopup from "./DeletePlacePopup.js";
 import ImagePopup from "./ImagePopup.js";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import InfoTooltip from "./InfoTooltip";
 import { api } from "../utils/api.js";
+import * as apiAuth from "../utils/apiAuth.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
+  const history = useHistory();
+
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const [isInfoTooltip, setIsInfoTooltip] = React.useState(false);
+  const [isInfoTooltipOk, setIsInfoTooltipOk] = React.useState(false);
+
   const [cards, setCards] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
-    false
-  );
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(
-    false
-  );
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
   const [cardDelete, setCardDelete] = React.useState({});
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isDeletePlacePopupOpen, setIsDeletePlacePopupOpen] = React.useState(
-    false
-  );
+  const [isDeletePlacePopupOpen, setIsDeletePlacePopupOpen] =
+    React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -111,6 +123,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsInfoTooltip(false);
     setSelectedCard(null);
   }
 
@@ -174,6 +187,15 @@ function App() {
     }
   }
 
+  function onRegister(data) {
+    return apiAuth.register(data).then(() => {
+      setIsInfoTooltipOk(true)
+      setIsInfoTooltip(true)
+      setIsLoggedIn(true)
+      history.push("/");
+    });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div
@@ -183,17 +205,31 @@ function App() {
         onClick={closePopupClickOnOverlay}
       >
         <Header />
-        <Main
-          cards={cards}
-          onCardLike={handleCardLike}
-          setCardDelete={setCardDelete}
-          onEditAvatar={handleEditAvatarClick}
-          onEditProfile={handleEditProfileClick}
-          onDeleteCardPopupOpen={handleDeletePlaceClick}
-          onEditPlace={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-        />
-        <Footer />
+        <Switch>
+          <Route path="/signup">
+            <Register onRegister={onRegister} setIsInfoTooltip={setIsInfoTooltip}/>
+          </Route>
+          <Route path="/signin">
+            <Login />
+          </Route>
+          <ProtectedRoute
+            path="/"
+            component={Main}
+            isLoggedIn={isLoggedIn}
+            cards={cards}
+            onCardLike={handleCardLike}
+            setCardDelete={setCardDelete}
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onDeleteCardPopupOpen={handleDeletePlaceClick}
+            onEditPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
+          />
+        </Switch>
+        <Route>
+          {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signup" />}
+        </Route>
+        {isLoggedIn && <Footer />}
         <EditAvatarPopup
           isLoading={isLoading}
           onUpdateAvatar={handleUpdateAvatar}
@@ -219,6 +255,12 @@ function App() {
           isOpen={isDeletePlacePopupOpen}
         />
         <ImagePopup onClose={closeAllPopups} card={selectedCard} />
+        <InfoTooltip
+          onClose={closeAllPopups}
+          isOpen={isInfoTooltip}
+          title= {isInfoTooltipOk ? "Вы успешно зарегистрировались!" : "Пшел на хуй" }
+          img={isInfoTooltipOk ? RegOk : RegErr}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
