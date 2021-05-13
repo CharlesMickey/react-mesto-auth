@@ -1,5 +1,5 @@
 .formAuth__input {
-  border-bottom: 2px solid #CCCCCC;
+  border-bottom: 2px solid #cccccc;
   border-top: none;
   border-left: none;
   border-right: none;
@@ -9,7 +9,7 @@
   padding-top: 30px;
   padding-bottom: 13px;
   margin: 0 auto 0 0;
-  font-family: 'Inter', 'arial', sans-serif;
+  font-family: "Inter", "arial", sans-serif;
   font-weight: normal;
   text-rendering: optimizeLegibility;
   font-size: 14px;
@@ -20,13 +20,12 @@
 }
 
 .formAuth__input::placeholder {
-font-family: 'Inter', 'arial', sans-serif;
-font-weight: normal;
-font-size: 14px;
-line-height: 1.21;
-color: #CCC;
- }
-
+  font-family: "Inter", "arial", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #ccc;
+}
 
 @media screen and (max-width: 565px) {
   .formAuth__input {

@@ -8,3 +8,17 @@
   color: #ffffff;
   margin: 6px 0 46px;
 }
+
+@media screen and (max-width: 907px) {
+  .header__text {
+    margin-right: 13.5px;
+    }
+  }
+
+  @media screen and (max-width: 495px) {
+    .header__text {
+      font-size: 14px;
+      line-height: 1.21;
+      margin-bottom: 33px;
+      }
+    }

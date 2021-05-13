@@ -1,6 +1,6 @@
 import React from "react";
 
-function Login({onLogin}) {
+function Login({ onLogin }) {
   const [stateInput, setStateInput] = React.useState({
     email: "",
     password: "",
@@ -13,7 +13,7 @@ function Login({onLogin}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onLogin(stateInput)
+    onLogin(stateInput);
   }
 
   return (
