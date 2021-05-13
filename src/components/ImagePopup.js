@@ -3,7 +3,7 @@ import React from "react";
 function ImagePopup({ card, onClose }) {
   return (
     <div className={`popup ${card && "popup_opened"}`} id="popup-image">
-      <figure className="popup__container-image">
+      <figure className={`${card ? "popup__container-image" : ""}`}>
         <button
           onClick={onClose}
           className="popup__button-close"
