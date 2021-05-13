@@ -194,7 +194,8 @@ function App() {
     }
     apiAuth
       .getContent(jwt)
-      .then(() => {
+      .then(({data: {email}}) => {
+        setIsUserEmail({email})
         setIsLoggedIn(true);
       })
       .catch((err) => {
