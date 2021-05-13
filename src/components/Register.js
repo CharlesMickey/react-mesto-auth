@@ -14,12 +14,10 @@ function Register({ onRegister, setIsInfoTooltip }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(stateInput)
-    onRegister(stateInput)
-    .catch((err) => {
-      setIsInfoTooltip(true)
-      console.log(err)} );
-
+    console.log(stateInput);
+    onRegister(stateInput).catch((err) => {
+      setIsInfoTooltip(true);
+    });
   }
 
   return (
@@ -67,7 +65,7 @@ function Register({ onRegister, setIsInfoTooltip }) {
         </button>
         <p className={`formAuth__signup`}>
           Уже зарегистрированны?
-          <Link to="/sign-up" className={`formAuth__signup-link`}>
+          <Link to="/signin" className={`formAuth__signup-link`}>
             {" "}
             Войти
           </Link>

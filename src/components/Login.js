@@ -1,21 +1,32 @@
 import React from "react";
 
-function Login() {
-  const [stateInput, setStateInput] = React.useState({});
+function Login({onLogin, setIsInfoTooltip}) {
+  const [stateInput, setStateInput] = React.useState({
+    email: "",
+    password: "",
+  });
 
   function handleChangeInput(e) {
-    const name = e.target.name;
-    const value = e.target.value;
+    const { name, value } = e.target;
     setStateInput({ ...stateInput, [name]: value });
   }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(stateInput);
+    onLogin(stateInput).catch((err) => {
+      setIsInfoTooltip(true);
+    });
+  }
+
   return (
     <div className={`formAuth`}>
       <h2 className={`formAuth__form-name`}>Вход</h2>
-      <form className={`formAuth__form`} noValidate>
+      <form onSubmit={handleSubmit} className={`formAuth__form`} noValidate>
         <fieldset className="formAuth__set">
           <label className="formAuth__field">
             <input
-              type="text"
+              type="email"
               name="email"
               id="email"
               placeholder="Email"

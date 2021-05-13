@@ -15,7 +15,8 @@
   font-size: 14px;
   line-height: 1.41;
   color: #ffffff;
-
+  -webkit-box-shadow: inset 0 0 0 50px rgb(0, 0, 0);
+  -webkit-text-fill-color: rgb(255, 255, 255);
 }
 
 .formAuth__input::placeholder {

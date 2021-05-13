@@ -196,6 +196,14 @@ function App() {
     });
   };
 
+  function onLogin(data) {
+    return apiAuth.authorize(data).then(() => {
+      setIsInfoTooltipOk(true)
+      setIsLoggedIn(true)
+      history.push("/");
+    });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div
@@ -204,13 +212,13 @@ function App() {
         tabIndex="0"
         onClick={closePopupClickOnOverlay}
       >
-        <Header />
+        <Header isLoggedIn={isLoggedIn}/>
         <Switch>
           <Route path="/signup">
             <Register onRegister={onRegister} setIsInfoTooltip={setIsInfoTooltip}/>
           </Route>
           <Route path="/signin">
-            <Login />
+            <Login onLogin={onLogin} setIsInfoTooltip={setIsInfoTooltip}/>
           </Route>
           <ProtectedRoute
             path="/"
@@ -227,7 +235,7 @@ function App() {
           />
         </Switch>
         <Route>
-          {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signup" />}
+          {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
         </Route>
         {isLoggedIn && <Footer />}
         <EditAvatarPopup
@@ -258,7 +266,7 @@ function App() {
         <InfoTooltip
           onClose={closeAllPopups}
           isOpen={isInfoTooltip}
-          title= {isInfoTooltipOk ? "Вы успешно зарегистрировались!" : "Пшел на хуй" }
+          title= {isInfoTooltipOk ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз." }
           img={isInfoTooltipOk ? RegOk : RegErr}
         />
       </div>
