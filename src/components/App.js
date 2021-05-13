@@ -194,8 +194,8 @@ function App() {
     }
     apiAuth
       .getContent(jwt)
-      .then(({data: {email}}) => {
-        setIsUserEmail({email})
+      .then(({ data: { email } }) => {
+        setIsUserEmail({ email });
         setIsLoggedIn(true);
       })
       .catch((err) => {
@@ -228,11 +228,11 @@ function App() {
       });
   }
 
-  function onLogin({email, password}) {
+  function onLogin({ email, password }) {
     return apiAuth
-      .authorize({email, password})
+      .authorize({ email, password })
       .then(({ token }) => {
-        setIsUserEmail({email})
+        setIsUserEmail({ email });
         setIsInfoTooltipOk(true);
         setIsLoggedIn(true);
         localStorage.setItem("token", token);
@@ -257,7 +257,11 @@ function App() {
         tabIndex="0"
         onClick={closePopupClickOnOverlay}
       >
-        <Header email={isUserEmail.email} onLogOut={onLogOut} isLoggedIn={isLoggedIn} />
+        <Header
+          email={isUserEmail.email}
+          onLogOut={onLogOut}
+          isLoggedIn={isLoggedIn}
+        />
         <Switch>
           <Route path="/signup">
             <Register onRegister={onRegister} />

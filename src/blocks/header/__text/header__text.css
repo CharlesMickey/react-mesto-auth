@@ -12,13 +12,13 @@
 @media screen and (max-width: 907px) {
   .header__text {
     margin-right: 15px;
-    }
   }
+}
 
-  @media screen and (max-width: 495px) {
-    .header__text {
-      font-size: 14px;
-      line-height: 1.21;
-      margin-bottom: 33px;
-      }
-    }
+@media screen and (max-width: 495px) {
+  .header__text {
+    font-size: 14px;
+    line-height: 1.21;
+    margin-bottom: 33px;
+  }
+}
