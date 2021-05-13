@@ -25,6 +25,7 @@ function App() {
 
   const [isInfoTooltip, setIsInfoTooltip] = React.useState(false);
   const [isInfoTooltipOk, setIsInfoTooltipOk] = React.useState(false);
+  const [isUserEmail, setIsUserEmail] = React.useState({});
 
   const [cards, setCards] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState({});
@@ -186,23 +187,66 @@ function App() {
       closeAllPopups();
     }
   }
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem("token");
+    if (!jwt) {
+      return;
+    }
+    apiAuth
+      .getContent(jwt)
+      .then(() => {
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        console.log(`${err}`);
+      });
+  };
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      history.push("/");
+    }
+  }, [isLoggedIn]);
 
   function onRegister(data) {
-    return apiAuth.register(data).then(() => {
-      setIsInfoTooltipOk(true)
-      setIsInfoTooltip(true)
-      setIsLoggedIn(true)
-      history.push("/");
-    });
-  };
+    return apiAuth
+      .register(data)
+      .then(() => {
+        setIsInfoTooltipOk(true);
+        setIsInfoTooltip(true);
+        setIsLoggedIn(true);
+        history.push("/");
+      })
+      .catch((err) => {
+        setIsInfoTooltip(true);
+        console.log(`${err}`);
+      });
+  }
 
-  function onLogin(data) {
-    return apiAuth.authorize(data).then(() => {
-      setIsInfoTooltipOk(true)
-      setIsLoggedIn(true)
-      history.push("/");
-    });
-  };
+  function onLogin({email, password}) {
+    return apiAuth
+      .authorize({email, password})
+      .then(({ token }) => {
+        setIsUserEmail({email})
+        setIsInfoTooltipOk(true);
+        setIsLoggedIn(true);
+        localStorage.setItem("token", token);
+        history.push("/");
+      })
+      .catch((err) => {
+        setIsInfoTooltip(true);
+        console.log(`${err}`);
+      });
+  }
+
+  function onLogOut() {
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -212,13 +256,13 @@ function App() {
         tabIndex="0"
         onClick={closePopupClickOnOverlay}
       >
-        <Header isLoggedIn={isLoggedIn}/>
+        <Header email={isUserEmail.email} onLogOut={onLogOut} isLoggedIn={isLoggedIn} />
         <Switch>
           <Route path="/signup">
-            <Register onRegister={onRegister} setIsInfoTooltip={setIsInfoTooltip}/>
+            <Register onRegister={onRegister} />
           </Route>
           <Route path="/signin">
-            <Login onLogin={onLogin} setIsInfoTooltip={setIsInfoTooltip}/>
+            <Login onLogin={onLogin} />
           </Route>
           <ProtectedRoute
             path="/"
@@ -266,7 +310,11 @@ function App() {
         <InfoTooltip
           onClose={closeAllPopups}
           isOpen={isInfoTooltip}
-          title= {isInfoTooltipOk ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз." }
+          title={
+            isInfoTooltipOk
+              ? "Вы успешно зарегистрировались!"
+              : "Что-то пошло не так! Попробуйте ещё раз."
+          }
           img={isInfoTooltipOk ? RegOk : RegErr}
         />
       </div>

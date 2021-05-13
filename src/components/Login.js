@@ -1,6 +1,6 @@
 import React from "react";
 
-function Login({onLogin, setIsInfoTooltip}) {
+function Login({onLogin}) {
   const [stateInput, setStateInput] = React.useState({
     email: "",
     password: "",
@@ -13,10 +13,7 @@ function Login({onLogin, setIsInfoTooltip}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(stateInput);
-    onLogin(stateInput).catch((err) => {
-      setIsInfoTooltip(true);
-    });
+    onLogin(stateInput)
   }
 
   return (

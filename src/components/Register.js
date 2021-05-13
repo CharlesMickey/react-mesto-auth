@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Register({ onRegister, setIsInfoTooltip }) {
+function Register({ onRegister }) {
   const [stateInput, setStateInput] = React.useState({
     email: "",
     password: "",
@@ -15,9 +15,7 @@ function Register({ onRegister, setIsInfoTooltip }) {
   function handleSubmit(e) {
     e.preventDefault();
     console.log(stateInput);
-    onRegister(stateInput).catch((err) => {
-      setIsInfoTooltip(true);
-    });
+    onRegister(stateInput)
   }
 
   return (

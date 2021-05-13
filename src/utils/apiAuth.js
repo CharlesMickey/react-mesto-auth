@@ -1,9 +1,7 @@
 export const BASE_URL = "https://auth.nomoreparties.co";
 
-export const checkResponse = (res) => {
-  return res.ok
-    ? res.json
-    : Promise.reject(new Error(`Ошибка ${res.status}: ${res.statusText}`));
+export const checkResponse = (response) => {
+  return response.ok ? response.json() : Promise.reject(new Error(`Ошибка ${response.status}: ${response.statusText}`));
 };
 
 const headers = {
@@ -27,9 +25,9 @@ export const authorize = ({ password, email }) => {
   }).then((res) => checkResponse(res));
 };
 
-export const getContent = ({ JWT }) => {
+export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
-    headers: { ...headers, Authorization: `Bearer ${JWT}` },
+    headers: { ...headers, Authorization: `Bearer ${token}` },
     method: "GET",
   }).then((res) => checkResponse(res));
 };
