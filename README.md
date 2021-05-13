@@ -5,6 +5,7 @@
 - * `React`
 - * `API`
 - * `Webpack`
+- * `Authorization`
 
 * `CSS`
 * `Flexbox`
