@@ -14,7 +14,6 @@ function Register({ onRegister }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(stateInput);
     onRegister(stateInput);
   }
 

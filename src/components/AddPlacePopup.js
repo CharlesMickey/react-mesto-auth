@@ -33,7 +33,6 @@ function AddPlacePopup({ onClose, isOpen, onAddPlaceSubmit, isLoading }) {
       name="image-form"
       title="Новое место"
     >
-      <fieldset className="popup__set">
         <label className="popup__field">
           <input
             type="text"
@@ -62,7 +61,6 @@ function AddPlacePopup({ onClose, isOpen, onAddPlaceSubmit, isLoading }) {
           />
           <span className="popup__input-error" id="link-error"></span>
         </label>
-      </fieldset>
     </PopupWithForm>
   );
 }

@@ -270,7 +270,7 @@ function App() {
             <Login onLogin={onLogin} />
           </Route>
           <ProtectedRoute
-            path="/"
+            exact path="/"
             component={Main}
             isLoggedIn={isLoggedIn}
             cards={cards}

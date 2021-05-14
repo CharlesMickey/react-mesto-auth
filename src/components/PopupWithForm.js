@@ -26,7 +26,10 @@ function PopupWithForm({
           name={name}
           noValidate
         >
-          {children}
+           <fieldset className="popup__set">
+           {children}
+           </fieldset>
+
           <button
             type="submit"
             value="Отправить на сервер"

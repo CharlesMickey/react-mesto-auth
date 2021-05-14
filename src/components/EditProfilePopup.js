@@ -37,7 +37,6 @@ function EditProfilePopup({ onClose, isOpen, onUpdateUser, isLoading }) {
       name="profile-popup"
       title="Редактировать профиль"
     >
-      <fieldset className="popup__set">
         <label className="popup__field">
           <input
             type="text"
@@ -68,7 +67,6 @@ function EditProfilePopup({ onClose, isOpen, onUpdateUser, isLoading }) {
           />
           <span className="popup__input-error" id="about-error"></span>
         </label>
-      </fieldset>
     </PopupWithForm>
   );
 }

@@ -25,7 +25,6 @@ function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, isLoading }) {
       name="avatar-form"
       title="Обновить аватар"
     >
-      <fieldset className="popup__set">
         <label className="popup__field">
           <input
             ref={avatarRef}
@@ -38,7 +37,6 @@ function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, isLoading }) {
           />
           <span className="popup__input-error" id="linkAvatar-error"></span>
         </label>
-      </fieldset>
     </PopupWithForm>
   );
 }
