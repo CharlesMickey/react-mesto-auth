@@ -2,24 +2,23 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
 
 function AddPlacePopup({ onClose, isOpen, onAddPlaceSubmit, isLoading }) {
-  const [stateInput, setStateInput] = React.useState({});
+  const [stateInputs, setStateInputs] = React.useState({});
 
   React.useEffect(() => {
-    setStateInput({});
+    setStateInputs({});
   }, [isOpen]);
 
   function handleChangeInput(e) {
-    const name = e.target.name;
-    const value = e.target.value;
-    setStateInput({...stateInput, [name]: value});
+    const {name, value} = e.target;
+    setStateInputs({...stateInputs, [name]: value});
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     // Передаём значения управляемых компонентов во внешний обработчик
     onAddPlaceSubmit({
-      name: stateInput.name,
-      link: stateInput.link,
+      name: stateInputs.name,
+      link: stateInputs.link,
     });
   }
 
@@ -42,7 +41,7 @@ function AddPlacePopup({ onClose, isOpen, onAddPlaceSubmit, isLoading }) {
             className="popup__input popup__place"
             minLength="2"
             maxLength="30"
-            value={stateInput.name || ''}
+            value={stateInputs.name || ''}
             onChange={handleChangeInput}
             required
           />
@@ -55,7 +54,7 @@ function AddPlacePopup({ onClose, isOpen, onAddPlaceSubmit, isLoading }) {
             name="link"
             id="link"
             className="popup__input"
-            value={stateInput.link || ''}
+            value={stateInputs.link || ''}
             onChange={handleChangeInput}
             required
           />

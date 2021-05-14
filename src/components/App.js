@@ -5,8 +5,6 @@ import Main from "./Main.js";
 import Login from "./Login.js";
 import Register from "./Register";
 import Footer from "./Footer.js";
-import RegOk from "../images/RegOk.svg";
-import RegErr from "../images/RegErr.svg";
 import DeletePlacePopup from "./DeletePlacePopup.js";
 import ImagePopup from "./ImagePopup.js";
 import EditProfilePopup from "./EditProfilePopup";
@@ -245,6 +243,7 @@ function App() {
   }
 
   function onLogOut() {
+    setIsInfoTooltipOk(false);
     setIsLoggedIn(false);
     localStorage.removeItem("token");
   }
@@ -315,12 +314,7 @@ function App() {
         <InfoTooltip
           onClose={closeAllPopups}
           isOpen={isInfoTooltip}
-          title={
-            isInfoTooltipOk
-              ? "Вы успешно зарегистрировались!"
-              : "Что-то пошло не так! Попробуйте ещё раз."
-          }
-          img={isInfoTooltipOk ? RegOk : RegErr}
+          isInfoTooltipOk={isInfoTooltipOk}
         />
       </div>
     </CurrentUserContext.Provider>
