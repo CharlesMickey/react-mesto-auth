@@ -269,7 +269,8 @@ function App() {
             <Login onLogin={onLogin} />
           </Route>
           <ProtectedRoute
-            exact path="/"
+            exact
+            path="/"
             component={Main}
             isLoggedIn={isLoggedIn}
             cards={cards}
@@ -281,10 +282,10 @@ function App() {
             onEditPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
           />
+          <Route>
+            {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
+          </Route>
         </Switch>
-        <Route>
-          {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
-        </Route>
         {isLoggedIn && <Footer />}
         <EditAvatarPopup
           isLoading={isLoading}

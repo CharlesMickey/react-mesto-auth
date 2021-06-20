@@ -11,7 +11,7 @@ function InfoTooltip({ isOpen, onClose, isInfoTooltipOk }) {
           className={`popup__button-close-tooltip`}
           type="button"
         ></button>
-        <img className={`popup__img-tooltip`} src={isInfoTooltipOk ? RegOk : RegErr} />
+        <img className={`popup__img-tooltip`} src={isInfoTooltipOk ? RegOk : RegErr} alt={"Изображение состояния входа"} />
         <h2 className={`popup__title-tooltip`}>{isInfoTooltipOk ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз."}</h2>
       </div>
     </div>
